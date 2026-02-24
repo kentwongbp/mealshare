@@ -3,46 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mealshare App</title>
+    <title>Mealshare MVP</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Georgia&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body { margin: 0; background-color: #1c1917; font-family: 'Nunito', sans-serif; }
+        #root { min-height: 100vh; }
+    </style>
 </head>
-<body style="margin:0; background-color:#1c1917; color: white; font-family: sans-serif;">
-    <div id="root" style="padding: 20px; text-align: center;">
-        Loading Mealshare App...
-    </div>
+<body>
+    <div id="root"></div>
 
     <script type="text/babel">
+        // We need to extract these from the React object since we aren't using "import"
         const { useState, useEffect } = React;
 
         // --- DASHBOARD COMPONENT ---
         const CookDashboard = ({ onBack }) => (
-          <div style={{ padding: "20px", background: "#fff", minHeight: "100vh", color: "#333" }}>
-            <button onClick={onBack} style={{ marginBottom: "20px", padding: "8px 16px", cursor: "pointer" }}>← Back to App</button>
-            <h2 style={{ fontFamily: "Georgia", color: "#D4500A" }}>Cook Dashboard</h2>
+          <div style={{ padding: "20px", background: "#fff", minHeight: "100vh", color: "#1c1917", maxWidth: "430px", margin: "0 auto" }}>
+            <button onClick={onBack} style={{ marginBottom: "20px", background: "#f5f5f4", border: "none", padding: "10px 15px", borderRadius: "10px", fontWeight: "bold", cursor: "pointer" }}>← Back to App</button>
+            <h2 style={{ fontFamily: "Georgia", color: "#D4500A", margin: "0 0 10px 0" }}>Cook Dashboard</h2>
+            <p style={{ fontSize: "14px", color: "#57534E", marginBottom: "20px" }}>Management view for home chefs.</p>
+            
             <div style={{ background: "#DCFCE7", padding: "15px", borderRadius: "12px", marginBottom: "15px", border: "1px solid #86EFAC" }}>
               <strong style={{ color: "#15803D" }}>Active Orders (3)</strong>
-              <p style={{ fontSize: "13px", margin: "5px 0 0" }}>Next Batch Pickup: 6:00 PM</p>
+              <p style={{ fontSize: "13px", margin: "5px 0 0", color: "#166534" }}>Next Batch Pickup: 6:00 PM (Lalamove)</p>
             </div>
-            <div style={{ border: "1px solid #EDE8E3", borderRadius: "12px", padding: "15px", marginBottom: "10px" }}>
-              <p style={{ margin: 0 }}><strong>Order #1024</strong> - 2x Masak Lemak</p>
-              <p style={{ fontSize: "12px", color: "#A8A29E", margin: "5px 0 10px" }}>Delivery: Lobby, Meru Heights Condominium</p>
-              <button style={{ background: "#15803D", color: "#fff", border: "none", padding: "8px 12px", borderRadius: "8px", fontWeight: "bold", cursor: "pointer" }}>Mark Ready</button>
+
+            <div style={{ border: "1px solid #EDE8E3", borderRadius: "12px", padding: "15px", marginBottom: "12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <p style={{ margin: 0, fontWeight: "800" }}>Order #1024</p>
+                  <p style={{ fontSize: "13px", color: "#57534E", margin: "4px 0" }}>2x Masak Lemak Cili Api</p>
+                </div>
+                <span style={{ fontSize: "12px", background: "#FEF3C7", color: "#92400E", padding: "2px 8px", borderRadius: "10px", fontWeight: "bold" }}>PAID</span>
+              </div>
+              <p style={{ fontSize: "12px", color: "#A8A29E", margin: "10px 0" }}>📍 Delivery: Lobby, Meru Heights Condominium</p>
+              <button style={{ width: "100%", background: "#D4500A", color: "#fff", border: "none", padding: "12px", borderRadius: "10px", fontWeight: "bold", cursor: "pointer" }}>Mark as Ready for Pickup</button>
             </div>
           </div>
         );
 
-        // --- PASTE YOUR ORIGINAL JSX CODE BELOW ---
-        // (Make sure to wrap the original MealshareApp logic inside this script tag)
-        
-        // IMPORTANT: Inside your MealshareApp() function, 
-        // add a button somewhere like the Profile or Settings 
-        // that does: onClick={() => setView('dashboard')}
-        
-        // --- END OF YOUR JSX CODE ---
+        // --- MAIN APP LOGIC (Simplified for browser compatibility) ---
+        function MealshareApp() {
+            const [view, setView] = useState('user'); // 'user' or 'dashboard'
+
+            if (view === 'dashboard') {
+                return <CookDashboard onBack={() => setView('user')} />;
+            }
+
+            return (
+                <div style={{ maxWidth: "430px", margin: "0 auto", background: "#FFFAF7", minHeight: "100vh", position: "relative", boxShadow: "0 0 50px rgba(0,0,0,0.1)" }}>
+                    {/* Header */}
+                    <div style={{ background: "linear-gradient(135deg, #1C1917, #2D2420)", padding: "25px 20px" }}>
+                        <div style={{ color: "#F07030", fontSize: "10px", fontWeight: "900", letterSpacing: "3px", marginBottom: "5px" }}>MEALSHARE</div>
+                        <h1 style={{ color: "white", fontFamily: "Georgia", margin: 0, fontSize: "24px" }}>Home Cooks Near You</h1>
+                        <p style={{ color: "#A8A29E", fontSize: "12px", margin: "5px 0 0" }}>📍 Ipoh Garden Timur</p>
+                    </div>
+
+                    {/* Content */}
+                    <div style={{ padding: "20px" }}>
+                        <div style={{ background: "white", borderRadius: "20px", padding: "15px", border: "1px solid #EDE8E3", marginBottom: "15px" }}>
+                            <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+                                <span style={{ fontSize: "40px" }}>👩‍🍳</span>
+                                <div>
+                                    <h3 style={{ margin: 0, fontFamily: "Georgia" }}>Kak Rohani</h3>
+                                    <p style={{ margin: "2px 0", fontSize: "12px", color: "#57534E" }}>Malay Home Cook • 0.3km</p>
+                                    <p style={{ margin: 0, fontSize: "12px", color: "#D4500A", fontWeight: "bold" }}>★ 4.9 (87 reviews)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{ background: "#FFF0E8", borderRadius: "15px", padding: "15px", border: "1px solid #FDDCC4", textAlign: "center" }}>
+                            <p style={{ margin: 0, fontSize: "14px", color: "#D4500A", fontWeight: "bold" }}>Want to see how cooks manage orders?</p>
+                            <button 
+                                onClick={() => setView('dashboard')}
+                                style={{ marginTop: "10px", background: "#D4500A", color: "white", border: "none", padding: "10px 20px", borderRadius: "10px", fontWeight: "bold", cursor: "pointer" }}
+                            >
+                                Open Cook Dashboard
+                            </button>
+                        </div>
+                    </div>
+                    
+                    {/* Placeholder for the rest of your original v4 code */}
+                    <div style={{ padding: "20px", textAlign: "center", color: "#A8A29E", fontSize: "13px" }}>
+                        Full Menu & Checkout logic active in build...
+                    </div>
+                </div>
+            );
+        }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<MealshareApp />);
